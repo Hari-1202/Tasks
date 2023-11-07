@@ -14,6 +14,7 @@ const Tasks = () => {
       const result = await fetch(`${baseUrl}/tasks`, {
         method: 'GET',
         headers: {
+          'Content-Type': 'application/json',
           authToken: userToken
         }
       })

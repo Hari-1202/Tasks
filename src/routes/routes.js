@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { Provider } from 'react-redux'
 import store from '../store'
 
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, json } from 'react-router-dom'
 import Authenticator from '../components/authenticator/authenticator';
 import Tasks from '../components/tasks/tasks';
+import UserContainer from '../components/user/user';
+import Header from '../components/header/header';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
-    <Route path='/' element={<Authenticator />} loader={async ({ request, params }) => {
+     <Route path='/' element={<Header Component={Authenticator} compName= "authentictor"/>} />
+    {/* <Route path='/' element={<Authenticator />} loader={async ({ request, params }) => {
       const resp = await fetch('https://jsonplaceholder.typicode.com/todos/1')
       const data = await resp.json()
       return {
         data, status: 200
       }
 
-    }} />
+    }} /> */}
     <Route path='/tasks'>
-      <Route index element={<Tasks />} />
+      <Route index element={<Header compName= "tasks" Component={Tasks} />} />
     </Route>
+
+    <Route path='/profile' element={<Header compName= "profile" Component={UserContainer}/>}/>
   </>
 ))
 

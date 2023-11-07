@@ -33,7 +33,7 @@ const Authenticator = () => {
   const handleLogin = async () => {
     const reqBody = {
       email: "hariharandhanraj0203@gmail.com",
-      password: "Hariharan@03"
+      password: "test@1234"
     }
     const resp = await fetch(`${baseUrl}/login`, {
       method: 'POST',
@@ -53,6 +53,7 @@ const Authenticator = () => {
     dispatch(updateToken(result.token))
 
     navigate('/tasks');
+    // navigate('/profile')
 
   }
 
@@ -60,6 +61,7 @@ const Authenticator = () => {
     <>
       <button onClick={handleSignUp}>Signup</button>
       <button onClick={handleLogin}>Login</button>
+      {/* <button onClick={handleLogin}>Login</button> */}
     </>
   )
 

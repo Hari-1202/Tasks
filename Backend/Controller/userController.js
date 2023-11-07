@@ -6,7 +6,11 @@ const ApplicationError = require("../utils/error")
 
 const changePassword = asyncErrorHandler(async (req, res, next) => {
     try {
-        const encryptPssword = await bcrypt.hash(req.body.password, 12)
+      console.log(req, req.body.password, req.currentUser.password, req.body.newPassword, "userData" )
+      const checkPasswordMatch = await req.currentUser.checkPasswordMatch(req.body.password, req.currentUser.password)
+      console.log(req.body.password, req.currentUser.password, req.body.newPassword, checkPasswordMatch, "userData" )
+      if(checkPasswordMatch){
+        const encryptPssword = await bcrypt.hash(req.body.newPassword, 12)
         const updateBody = {
             password: encryptPssword,
             changedPasswordAt: Date.now()
@@ -19,6 +23,9 @@ const changePassword = asyncErrorHandler(async (req, res, next) => {
             message: 'Password updasted successfully',
             data: response
         })
+      } else {
+        next(new ApplicationError('Old password do not match'), 400)
+      }
     } catch (err) {
         next(new ApplicationError(`An error occured " ${err}`, 400))
     }
